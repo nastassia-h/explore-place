@@ -1,9 +1,9 @@
 import React from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home, Fav, Search, Profile } from '../Screens';
+import { Fav, Search } from '../Screens';
+import HomeNavigation from './HomeHavigation';
 
 export default function TabNavigation() {
     const Tab = createBottomTabNavigator();
@@ -11,7 +11,7 @@ export default function TabNavigation() {
     <Tab.Navigator screenOptions={{
         headerShown: false
     }}>
-      <Tab.Screen name="Home" component={Home} 
+      <Tab.Screen name="Home" component={HomeNavigation} 
       options={{
         tabBarLabel: 'Home',
         tabBarIcon: ({color, size}) => (
@@ -32,14 +32,6 @@ export default function TabNavigation() {
         tabBarLabel: 'Search',
         tabBarIcon: ({color, size}) => (
             <AntDesign name="search1" size={size} color={color} />
-        ),
-      }}
-      />
-      <Tab.Screen name="Profile" component={Profile} 
-      options={{
-        tabBarLabel: 'Profile',
-        tabBarIcon: ({color, size}) => (
-            <FontAwesome name="user-circle-o" size={size} color={color} />
         ),
       }}
       />

@@ -16,9 +16,6 @@ export default function Header() {
                style={styles.searchbar}
             />
          </View>
-         <Image source={require('./../../../assets/placeholder.jpg')}
-            style={styles.userImage}
-         />
       </View>
     </SafeAreaView>
   )

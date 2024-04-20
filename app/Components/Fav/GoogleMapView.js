@@ -1,50 +1,47 @@
 import { View, StyleSheet, Dimensions, Text } from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
-import React, { useContext, useEffect, useState } from 'react'
-import { UserLocationContext } from '../../Context/UserLocationContext';
-import PlaceMarker from './PlaceMarker';
+import React, { useEffect, useState } from 'react'
+import FavMarker from './FavMarker';
 
-export default function GoogleMapView({placeList}) {
+export default function GoogleMapView({places, index}) {
    const [mapRegion, setMapRegion] = useState({})
-
-   const {location, setLocation} = useContext(UserLocationContext);
+   const place = places[index];
+   const selected = index;
 
    useEffect(()=>{
-      if (!location) return;
+      if (!place) return;
       setMapRegion({
-         latitude: location.coords.latitude,
-         longitude: location.coords.longitude,
-         latitudeDelta: 0.0522,
-         longitudeDelta: 0.0421,
+         latitude: place.geometry?.location.lat,
+         longitude: place.geometry?.location.lng,
+         latitudeDelta: 0.00222,
+         longitudeDelta: 0.00221,
       })
-   },[location])
+   },[index])
 
   return (
    <View style={styles.mainContainer}>
-      <Text style={styles.title}>Top Near By Places</Text>
       <View style={styles.container}>
-         {location 
+         {places
          ? (
             <MapView style={styles.map} 
             provider={PROVIDER_GOOGLE}
             showsUserLocation={true}
             region={mapRegion}
             >
-               {placeList.map((item,index)=>index<=4&&(
-                <PlaceMarker item={item} key={index} />
+               {places.map((item,index)=>(
+                <FavMarker item={item} key={index} isSelected={selected === index}/>
                ))}
             </MapView>
          ) : null}
     </View>
    </View>
-    
   )
 }
 
 const styles = StyleSheet.create({
    mainContainer: {
       gap: 10,
-      marginBottom: 10
+      marginBottom: 5
    },
    container: {
       alignItems: 'center',
@@ -56,7 +53,6 @@ const styles = StyleSheet.create({
    },
    map: {
       width: "100%",
-      height: Dimensions.get('screen').height*0.3,
-      borderRadius: 16,
+      height: Dimensions.get('screen').height*0.7,
    },
  });
