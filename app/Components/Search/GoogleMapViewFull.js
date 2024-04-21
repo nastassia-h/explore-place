@@ -10,7 +10,10 @@ export default function GoogleMapViewFull({placeList}) {
    const { location, setLocation } = useContext(UserLocationContext);
 
    useEffect(()=>{
+   //let place = placeList[0];
    if (location) setmapRegion({
+      // latitude: place.geometry?.location.lat,
+      // longitude: place.geometry?.location.lng,
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
       latitudeDelta: 0.0422,

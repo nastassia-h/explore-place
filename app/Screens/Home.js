@@ -6,12 +6,16 @@ import GlobalApi from '../Services/GlobalApi'
 
 export default function Home() {
   const [placeList, setPlaceList] = useState([]);
-
   const {location, setLocation} = useContext(UserLocationContext);
+  const [searchLocation, setSearchLocation] = useState('');
 
   useEffect(()=>{
+    if (searchLocation.length > 0) {
+      getNearBySearchPlaceText(searchLocation);
+      return;
+    }
     if (location) getNearBySearchPlace('restaurant'); 
-  },[location])
+  },[location, searchLocation])
   
   const getNearBySearchPlace = (value) => {
     GlobalApi.nearByPlace(location.coords.latitude,
@@ -20,10 +24,16 @@ export default function Home() {
     })
   } 
 
+  const getNearBySearchPlaceText = (value) => {
+    GlobalApi.searchByText(value).then(resp=>{
+      setPlaceList(resp.data.results);
+    })
+  } 
+
   return (
     <ScrollView style={styles.container}>
       <StatusBar translucent={false}/>
-      <Header/>
+      <Header setSearchLocation={setSearchLocation}/>
       <GoogleMapView placeList={placeList} />
       <CategoryList setSelectedCategory={(value)=>getNearBySearchPlace(value)}/>
       {placeList 

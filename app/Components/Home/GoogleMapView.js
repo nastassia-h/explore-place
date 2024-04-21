@@ -10,6 +10,16 @@ export default function GoogleMapView({placeList}) {
    const {location, setLocation} = useContext(UserLocationContext);
 
    useEffect(()=>{
+      if (placeList.length > 0) {
+         let place = placeList[0];
+         setMapRegion({
+            latitude: place.geometry?.location.lat,
+            longitude: place.geometry?.location.lng,
+            latitudeDelta: 0.0522,
+            longitudeDelta: 0.0421,
+         });
+         return;
+      }
       if (!location) return;
       setMapRegion({
          latitude: location.coords.latitude,
@@ -17,7 +27,7 @@ export default function GoogleMapView({placeList}) {
          latitudeDelta: 0.0522,
          longitudeDelta: 0.0421,
       })
-   },[location])
+   },[location, placeList])
 
   return (
    <View style={styles.mainContainer}>

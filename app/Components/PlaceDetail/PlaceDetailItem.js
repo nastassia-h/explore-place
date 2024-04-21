@@ -13,10 +13,12 @@ export default function PlaceDetailItem({place,onDirectionClick,isFav,setIsFav})
          <Text style={{ fontSize: 26, fontFamily: "Raleway" }}>
          {place.name}
          </Text>
-         <View style={styles.ratingContainer}>
-         <AntDesign name="star" size={20} color={Colors.YELLOW} />
-         <Text>{place.rating}</Text>
-         </View>
+         {place.rating && 
+          <View style={styles.ratingContainer}>
+            <AntDesign name="star" size={20} color={Colors.YELLOW} />
+            <Text>{place.rating}</Text>
+          </View>
+        }
          {place?.photos 
             ? <Image source={{uri: GlobalApi.getPlaceImageUri(place?.photos[0]?.photo_reference)}} style={styles.image} />
             : null

@@ -1,33 +1,53 @@
-import { View, Image, TextInput, Dimensions } from 'react-native';
+import { View, Image, TextInput, Dimensions, TouchableOpacity } from 'react-native';
+import { AntDesign } from '@expo/vector-icons'; 
+import { useState } from 'react';
 import { SafeAreaView } from "react-native-safe-area-context";
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import Colors from '../../Shared/Colors';
 
-export default function Header() {
-  return (
-    <SafeAreaView>
-      <View style={styles.container}>
-         <Image source={require('./../../../assets/logo.png')}
-         style={styles.logo}
-         />
-         <View>
-            <TextInput placeholder='Search...'
-               style={styles.searchbar}
-            />
+export default function Header({setSearchLocation}) {
+   const [searchInput, setSearchInput]=useState('');
+   return (
+      <SafeAreaView>
+         <View style={styles.container}>
+            <View style={styles.inputContainer}>
+               <TextInput placeholder='Search...'
+                  style={styles.searchbar}
+                  value={searchInput}
+                  onChangeText={(value) => setSearchInput(value)}
+                  onSubmitEditing={() => setSearchLocation(searchInput)}
+               />
+               {searchInput.length > 0 && (
+               <TouchableOpacity 
+                  onPress={()=>{setSearchInput(''); setSearchLocation('')}} 
+                  style={styles.clearButton}
+               >
+                  <AntDesign name="close" size={20} color="gray" />
+               </TouchableOpacity>
+               )}
+            </View>
+            {/* <Image source={require('./../../../assets/logo.png')}
+            style={styles.logo}
+            /> */}
          </View>
-      </View>
-    </SafeAreaView>
-  )
+      </SafeAreaView>
+   )
 }
 
 
 const styles = StyleSheet.create({
    container: {
+      paddingTop: 5,
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'space-evenly'
+      justifyContent: 'space-around'
+   },
+   inputContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center'
    },
    logo: {
       width: 50,
@@ -46,5 +66,9 @@ const styles = StyleSheet.create({
       width: 50,
       height: 50,
       borderRadius: 100
+   },
+   clearButton: {
+      position: 'absolute',
+      right: 12
    }
 })

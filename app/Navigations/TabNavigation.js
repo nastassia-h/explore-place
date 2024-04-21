@@ -2,6 +2,7 @@ import React from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import FavNavigation from './FavNavigation';
 import { Fav, Search } from '../Screens';
 import HomeNavigation from './HomeHavigation';
 
@@ -19,7 +20,7 @@ export default function TabNavigation() {
         ),
       }}
       />
-      <Tab.Screen name="Fav" component={Fav} 
+      <Tab.Screen name="Fav" component={FavNavigation} 
       options={{
         tabBarLabel: 'Favorite',
         tabBarIcon: ({color, size}) => (

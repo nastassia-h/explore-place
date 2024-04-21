@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { View, FlatList, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { PlaceItem } from '../Home';
 import Colors from '../../Shared/Colors';
@@ -17,6 +18,11 @@ const HorizontalSlider = ({ data, setSelected }) => {
     setSelected(index);
   };
 
+  const navigator = useNavigation();
+  const onPlaceClick = (item) => {
+    navigator.navigate('place-detail', {place:item}); 
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{visibleIndex+1}/{data.length}</Text>
@@ -25,7 +31,7 @@ const HorizontalSlider = ({ data, setSelected }) => {
         horizontal
         data={data}
         renderItem={({ item, index }) => (
-            <TouchableOpacity key={index} style={styles.item}>
+            <TouchableOpacity key={index} style={styles.item} onPress={()=>onPlaceClick(item)}>
                <PlaceItem place={item} />
             </TouchableOpacity>
         )}

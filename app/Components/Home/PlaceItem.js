@@ -20,10 +20,12 @@ export default function PlaceItem({ place }) {
         <Text style={styles.textBig} numberOfLines={2}>
           {place.vicinity}
         </Text>
-        <View style={styles.ratingContainer}>
-          <AntDesign name="star" size={20} color={Colors.YELLOW} />
-          <Text>{place.rating}</Text>
-        </View>
+        {place.rating && 
+          <View style={styles.ratingContainer}>
+            <AntDesign name="star" size={20} color={Colors.YELLOW} />
+            <Text>{place.rating}</Text>
+          </View>
+        }
       </View>
       <HorizontalLine/>
     </View>
